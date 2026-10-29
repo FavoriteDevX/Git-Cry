@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+import os
+import sys
+import subprocess
+import random
+
+# A collection of dramatic responses for when everything breaks
+VENTS = [
+    r"""
+    (╯°□°）╯︵ ┻━┻
+    
+    WHY IS THERE ALWAYS A CONFLICT IN PACKAGE-LOCK.JSON?!
+    Just delete node_modules and start a new life in the woods.
+    """,
+    r"""
+     😭 😭😭 😭😭 😭😭 😭😭 😭😭
+    <<<<<<< HEAD
+    Your beautiful, pristine, flawless code.
+    =======
+    Someone else's chaotic, unformatted monster script.
+    >>>>>>> branch-that-should-never-have-been-merged
+    """,
+    r"""
+    [SHAME LOG]
+    You have encountered a merge conflict. 
+    Take a deep breath. Close your IDE. 
+    Go make a coffee. Do not look at the screen for 5 minutes.
+    """,
+    r"""
+    ( T _ T )
+    
+    "It was just a small quick fix," you said.
+    "It won't affect anything else," you thought.
+    Now look at you, manually choosing lines like a digital archaeologist.
+    """,
+    r"""
+    💥 BOOM! 💥
+    Git says: "I have absolutely no idea what you people are doing to this file."
+    Recommendation: Ask the other developer for a duel at dawn, or just run 'git merge --abort' and pretend today never happened.
+    """
+]
+
+def is_git_repository():
+    """Checks if the current directory is inside a Git repository."""
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--is-inside-work-tree"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        return result.returncode == 0
+    except FileNotFoundError:
+        print("[ERROR] Git is not installed on this system.")
+        sys.exit(1)
+
+def has_merge_conflicts():
+    """Checks if there are unresolved merge conflicts in the repository."""
+    try:
+        # 'git diff --name-only --diff-filter=U' lists unmerged (conflicted) files
+        result = subprocess.run(
+            ["git", "diff", "--name-only", "--diff-filter=U"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True
+        )
+        conflicted_files = result.stdout.strip().split("\n")
+        return [f for f in conflicted_files if f]
+    except subprocess.CalledProcessError:
+        return []
+
+def main():
+    if not is_git_repository():
+        print("❌ This is not a git repository. You can't cry here (well, you can, but git won't track it).")
+        sys.exit(1)
+
+    conflicts = has_merge_conflicts()
+
+    if conflicts:
+        print("\n🚨 DETECTED ACTIVE MERGE CONFLICTS IN:")
+        for file in conflicts:
+            print(f"  🔥 {file}")
+        
+        print("\n--- STARTING EMERGENCY VENT PROTOCOL ---")
+        print(random.choice(VENTS))
+        print("---------------------------------------")
+        
+        # Interactive screaming session
+        try:
+            input("\nType 'AAAAAAAH' to release the anger (or press Enter to close): ")
+            print("There, there. Now go run 'git mergetool' or start fixing those arrows. You got this. ☕")
+        except (KeyboardInterrupt, EOFError):
+            print("\nAborted crying session. Back to reality.")
+    else:
+        print("\n✨ Clean Status Check! ✨")
+        print("No active merge conflicts found. Your git history is peaceful today. Go grab a cookie! 🍪")
+
+if __name__ == "__main__":
+    main()
