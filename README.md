@@ -6,8 +6,7 @@ Instead of throwing your laptop, just type `git cry` to vent, scream, or get som
 
 Ok... so what's fun on this repo?
 
-<img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/6b221857-129d-4593-8ab1-4e0b057a76d9" />
-
+<img width="220" height="124" alt="joker-lunatic-modric-hermit" src="https://github.com/user-attachments/assets/1d70f25a-9b7f-4892-b2e7-40d20fe4e095" />
 
 ## How It Works
 
