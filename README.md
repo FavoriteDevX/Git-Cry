@@ -4,6 +4,11 @@
 
 Instead of throwing your laptop, just type `git cry` to vent, scream, or get some aggressive motivation.
 
+Ok... so what's fun on this repo?
+
+<img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/6b221857-129d-4593-8ab1-4e0b057a76d9" />
+
+
 ## How It Works
 
 When you run `git cry`:
